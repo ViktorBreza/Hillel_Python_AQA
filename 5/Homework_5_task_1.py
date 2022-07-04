@@ -3,9 +3,8 @@
 
 
 def type_finder(arg):
+    """Takes in data arg, returns the type of arg"""
     print(type(arg))
 
 
 
-
-type_finder(5)

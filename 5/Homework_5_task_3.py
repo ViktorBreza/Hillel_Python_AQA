@@ -6,12 +6,14 @@
 
 
 def arg_checker(arg1, arg2):
-    if arg1 and arg2 == int or float:
+    """Takes in two arguments, returns the result according to the type of the arguments"""
+    if isinstance(arg1, (int, float)) and isinstance(arg2, (int, float)):
         return arg1 - arg2
-    elif arg1 and arg2 == str:
+    elif isinstance(arg1, str) and isinstance(arg2, str):
         return arg1 + arg2
-    elif arg1 == str and arg2 != str:
-        return {arg1,arg2}
+    elif isinstance(arg1, str) and not isinstance(arg2, str):
+        arg_dict = {arg1: arg2}
+        return arg_dict
+    else:
+        return arg1, arg2
 
-
-print(arg_checker("asd", 55))

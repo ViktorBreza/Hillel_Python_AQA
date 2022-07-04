@@ -3,11 +3,12 @@
 
 
 def float_maker(arg):
+    """Takes in data arg, returns the arg converted into float"""
     try:
         return float(arg)
     except ValueError:
         return 0
 
 
-print(float_maker('s'))
+
 
