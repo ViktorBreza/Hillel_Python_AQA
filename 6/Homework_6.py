@@ -15,6 +15,7 @@
 
 
 def age_receiver():
+    """Take in users input, check it for being integer and positive"""
     while True:
         try:
             received_age = int(input('Введіть, будь ласка, ваш вік у числовому форматі:\n'))
@@ -29,8 +30,11 @@ def age_receiver():
 
 customer_age = age_receiver()
 
+assert isinstance(customer_age, int), "Users input is not integer"
+
 
 def correct_word_form(age):
+    """Select the correct form of word "рік", according to inputted  number"""
     if 20 >= customer_age >= 10:
         return "років"
     elif str(customer_age).endswith(("2", "3")):
@@ -41,18 +45,24 @@ def correct_word_form(age):
         return "років"
 
 
+according_word = correct_word_form(customer_age)
+
+assert according_word in ("рік", "років", "роки"), "Wrong accompanying word"
+
+
 def age_group_checking(age):
+    """Choose the correct accompanying text according to inputted number"""
     if len(str(customer_age)) > 1:
         if str(customer_age) == len(str(customer_age)) * str(customer_age)[0]:
-            return f'О, вам {customer_age} {correct_word_form(customer_age)}! Який цікавий вік!!'
+            return f'О, вам {customer_age} {according_word}! Який цікавий вік!!'
     if customer_age < 7:
-        return f'Тобі ж {customer_age} {correct_word_form(customer_age)}! Де твої батьки?'
+        return f'Тобі ж {customer_age} {according_word}! Де твої батьки?'
     elif customer_age < 16:
-        return f'Тобі лише {customer_age} {correct_word_form(customer_age)}, а це е фільм для дорослих!'
+        return f'Тобі лише {customer_age} {according_word}, а це фільм для дорослих!'
     elif customer_age > 65:
-        return f'Вам {customer_age} {correct_word_form(customer_age)}? Покажіть пенсійне посвідчення!'
+        return f'Вам {customer_age} {according_word}? Покажіть пенсійне посвідчення!'
     else:
-        return f'Незважаючи на те, що вам {customer_age} {correct_word_form(customer_age)}, білетів все одно нема!'
+        return f'Незважаючи на те, що вам {customer_age} {according_word}, білетів все одно нема!'
 
 
 print(age_group_checking(customer_age))
