@@ -14,40 +14,39 @@
 # # "О, вам 33 роки! Який цікавий вік!"
 
 
+class NotPositiveError(UserWarning):
+    pass
+
+
 def age_receiver():
-    """Take in users input, check it for being integer and positive"""
+    """Take in users input, check it for being positive integer"""
     while True:
         try:
             received_age = int(input('Введіть, будь ласка, ваш вік у числовому форматі:\n'))
-            if received_age > 0:
-                break
-            else:
-                print('Число мусить бути більше нуля, спробуйте ще раз')
+            if received_age <= 0:
+                raise NotPositiveError
+            break
         except ValueError:
             print('Ваш вік мусить бути введений цілими числами за допомогою цифр!')
+        except NotPositiveError:
+            print('Число мусить бути більше нуля, спробуйте ще раз')
     return received_age
 
 
 customer_age = age_receiver()
 
-assert isinstance(customer_age, int), "Users input is not integer"
-
 
 def correct_word_form(age):
     """Select the correct form of word "рік", according to inputted  number"""
-    if 20 >= customer_age >= 10:
-        return "років"
-    elif str(customer_age).endswith(("2", "3")):
-        return "роки"
-    elif str(customer_age).endswith("1"):
+    if customer_age % 10 == 1 and customer_age != 11 and customer_age % 100 != 11:
         return "рік"
+    elif 1 < customer_age % 10 <= 4 and customer_age != 12 and customer_age != 13 and customer_age != 14:
+        return "роки"
     else:
         return "років"
 
 
 according_word = correct_word_form(customer_age)
-
-assert according_word in ("рік", "років", "роки"), "Wrong accompanying word"
 
 
 def age_group_checking(age):
@@ -67,3 +66,8 @@ def age_group_checking(age):
 
 print(age_group_checking(customer_age))
 
+if __name__ == '__main__':
+    assert according_word in ("рік", "років", "роки"), "Wrong accompanying word"
+    assert age_group_checking(123) == "Вам 123 роки? Покажіть пенсійне посвідчення!", "Wrong age group"  # Перед
+    # запуском коду ввести в тест заплановане для вводу число та помістити відповідний шаблон f - строки
+    # з функції age_group_checking, або закоментувати цей тест
